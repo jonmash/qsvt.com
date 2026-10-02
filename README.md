@@ -14,7 +14,17 @@ same pages, same photos, same information architecture, new static theme that
 echoes the original's black header / gold (`#cc9900`) accent look.
 
 All copy and images were pulled directly from the live `qsvt.com` WordPress site
-(cross-checked against the Wayback Machine) on 2026-10-01.
+(cross-checked against the Wayback Machine) on 2026-10-01, then cross-checked
+again on 2026-10-01 against a full `wp-content` export Jon downloaded from the
+VPS (`~/Downloads/html`) — that export's `wp-content/uploads/2016/01/` folder
+is the authoritative source of original, un-cropped photo masters, since
+WordPress only ever served auto-generated crops/thumbnails on the live pages.
+Where a true full-frame master existed and was materially better than the
+cropped version WordPress displayed, it replaces the cropped version here (see
+`FEATURED_IMAGE_OVERRIDES` note below). Everything else in that export (theme,
+plugins, `wp-config.php`) was checked and contains no additional content —
+just the stock `storto`/`storto-child` theme and the Google Analytics plugin,
+already reflected in the scraped HTML.
 
 ## Structure
 
@@ -58,3 +68,19 @@ root). No GitHub Actions workflow, no manually created API tokens.
   user-visible on the original pages is missing.
 - The original's sidebar widgets (QSVT @ Wikipedia link, Queen's University logo)
   are preserved as plain links in the footer instead of a literal sidebar.
+
+## Image quality note
+
+Two featured images use the true uncropped master photo instead of the
+auto-cropped version WordPress displayed on the live site, because the master
+has meaningfully more visible content at the frame edges:
+
+- **Vehicle List** banner — `2005nasc2.jpg` (full pit-lane photo, people and
+  car both visible) instead of `2005nasc2-e1452570370373-800x272.jpg` (an
+  800×272 letterbox crop of the same shot).
+- **Ultraviolet** vehicle page — `car.jpg` (500×375, full car in frame) instead
+  of `car-e1452570150553.jpg` (496×247, top/bottom cropped).
+
+All other images matched byte-for-byte between the live-site scrape and the
+`wp-content/uploads` export, confirming nothing was lost in the original
+scrape.
