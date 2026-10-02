@@ -2,7 +2,8 @@
 
 Static archive of the **Queen's University Solar Vehicle Team (QSVT)** site. Plain
 static HTML/CSS, no build step, no framework, no JS dependencies — deployed via
-GitHub Actions straight to Cloudflare Pages.
+the Cloudflare Pages app's direct Git integration (no GitHub Actions, no manually
+managed API tokens).
 
 ## Why this exists
 
@@ -25,8 +26,7 @@ vehicles.html               Vehicle List (grid + results table)
 vehicles/*.html              One page per vehicle (Photomoto, SunQuest, ... Aurum)
 assets/css/style.css         All site styling (single file, CSS custom properties)
 assets/images/               All photos/logos, fetched at original resolution
-404.html, robots.txt, sitemap.xml, CNAME
-.github/workflows/deploy.yml  Cloudflare Pages deploy, mirrors highzmash.com's pattern
+404.html, robots.txt, sitemap.xml
 ```
 
 To change copy: edit the relevant `.html` file directly. No templating/build step —
@@ -34,20 +34,20 @@ same rationale as `jonmash.com`: a handful of static pages doesn't need one.
 
 ## Deploy
 
-Push to `main` → GitHub Actions runs `wrangler pages deploy` against a Cloudflare
-Pages project named `qsvt-com`.
+Deployed through the **Cloudflare dashboard/app's Git integration** — connect
+this repo as a Pages project and it builds and deploys automatically on every
+push to `main`. No build command needed (static output directory: `/`, repo
+root). No GitHub Actions workflow, no manually created API tokens.
 
 **One-time setup still needed (not done by this repo):**
 
-1. In Cloudflare Pages, create a project named `qsvt-com` (or change the
-   `--project-name` in `.github/workflows/deploy.yml` to match whatever you create).
-2. Add two GitHub Actions secrets on this repo (Settings → Secrets and variables →
-   Actions): `CLOUDFLARE_API_TOKEN` (Edit Cloudflare Pages template) and
-   `CLOUDFLARE_ACCOUNT_ID`.
-3. Add the `qsvt.com` (and `www.qsvt.com` if used) custom domain to the Cloudflare
-   Pages project once the first deploy succeeds.
-4. Point DNS at Cloudflare Pages (update `octodns-config` — do not hand-edit DNS)
-   and only then cancel the WordPress VPS.
+1. In the Cloudflare app/dashboard: Pages → Create project → Connect to Git →
+   select `jonmash/qsvt.com`. Build output directory: `/` (root), no build
+   command.
+2. Once the first deploy succeeds, add the `qsvt.com` (and `www.qsvt.com` if
+   used) custom domain to the Pages project.
+3. Point DNS at Cloudflare Pages (update `octodns-config` — do not hand-edit
+   DNS) and only then cancel the WordPress VPS.
 
 ## What was NOT migrated
 
